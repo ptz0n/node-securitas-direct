@@ -28,7 +28,7 @@ const sleep = (seconds) => new Promise((resolve) => {
 
 const buildId = (user) => {
   const date = new Date().toISOString().substring(0, 19).replace(/\D/g, '');
-  return `IPH_________________________${user}${date}`;
+  return `AND_________________________${user}${date}`;
 };
 
 // const supportedCountries = ['es', 'fr', 'pt']
@@ -90,6 +90,7 @@ class SecuritasDirect {
       method: 'GET',
       params: {
         ...this.params,
+        callby: 'AND_61',
         numinst: installation,
         panel,
         request: `${action}${step}`,

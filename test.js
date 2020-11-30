@@ -11,7 +11,7 @@ describe('ES', () => {
 
   const params = {
     Country: 'ES',
-    ID: 'IPH_________________________john20200206210254',
+    ID: 'AND_________________________john20200206210254',
     lang: 'es',
     pwd: 'topsecret',
     user: 'john',
@@ -47,6 +47,7 @@ describe('ES', () => {
   test('should get panel status', async () => {
     const query = {
       ...params,
+      callby: 'AND_61',
       numinst: '2423443',
       panel: 'SDVFAST',
     };
