@@ -101,7 +101,7 @@ class SecuritasDirect {
       return response;
     }
 
-    await sleep(2);
+    await sleep(1);
 
     return this.transaction(action, installation, panel, retries + 1);
   }
