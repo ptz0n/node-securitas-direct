@@ -1,7 +1,7 @@
 const nock = require('nock');
 const tk = require('timekeeper');
 
-const SecuritasDirect = require('./');
+const SecuritasDirect = require('.');
 
 nock.disableNetConnect();
 const scope = nock('https://mob2217.securitasdirect.es:12010/WebService/').log(console.log);
