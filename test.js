@@ -19,6 +19,10 @@ describe('ES', () => {
 
   const client = new SecuritasDirect('john', 'topsecret', 'es');
 
+  afterEach(() => {
+    expect(nock.isDone()).toBe(true); // nock.pendingMocks()
+  });
+
   test('login should get hash for user', async () => {
     scope.post('/ws.do').query({
       ...params,
@@ -72,4 +76,21 @@ describe('ES', () => {
     expect(NUMINST[0]).toBe('2423443');
     expect(STATUS[0]).toBe('0');
   }, 10000);
+
+  test('should throw with too many retries', () => {
+    const query = {
+      ...params,
+      callby: 'AND_61',
+      numinst: '2423443',
+      panel: 'SDVFAST',
+    };
+
+    scope.get('/ws.do').query({
+      ...query,
+      request: 'ASD2',
+    }).times(2).replyWithFile(200, `${__dirname}/test/responses/EST2-WAIT.xml`);
+
+    return expect(client.transaction('ASD', '2423443', 'SDVFAST', 9)).rejects
+      .toThrow('Too many retries');
+  });
 });
