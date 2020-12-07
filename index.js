@@ -15,6 +15,7 @@ client.interceptors.response.use(async (response) => {
       data,
     };
     error.config = response.config;
+    error.code = data && data.PET && data.PET.ERR && data.PET.ERR[0];
 
     return Promise.reject(error);
   }
@@ -49,6 +50,7 @@ class SecuritasDirect {
       method: 'POST',
       params: {
         ...this.params,
+        hash: undefined,
         request: 'LOGIN',
       },
     }).then(({ HASH }) => {
@@ -86,7 +88,7 @@ class SecuritasDirect {
 
     const step = retries === 0 ? 1 : 2;
 
-    const response = await client({
+    const request = {
       method: 'GET',
       params: {
         ...this.params,
@@ -95,7 +97,21 @@ class SecuritasDirect {
         panel,
         request: `${action}${step}`,
       },
-    }).catch(() => null);
+    };
+
+    const response = await client(request).catch(async (error) => {
+      // Invalid session. Please, try again later.
+      if (error.code === '60022') {
+        request.params.hash = await this.login();
+        return client(request);
+      }
+
+      if (error.code) {
+        throw error;
+      }
+
+      return null;
+    });
 
     if (response && step === 2) {
       return response;
