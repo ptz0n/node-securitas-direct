@@ -2,7 +2,7 @@
 
 [![](https://badges.greenkeeper.io/ptz0n/node-securitas-direct.svg)](https://greenkeeper.io/)
 
-[![](https://travis-ci.org/ptz0n/node-securitas-direct.svg?branch=master)](https://travis-ci.org/ptz0n/node-securitas-direct)
+[![GitHub Actions badge](https://github.com/ptz0n/node-securitas-direct/workflows/Test/badge.svg)](https://github.com/ptz0n/node-securitas-direct/actions?query=workflow%3ATest)
 
 A module for reading and changing status of Securitas Direct devices.
 
